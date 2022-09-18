@@ -5,7 +5,7 @@
 .. image:: https://github.com/circuitpython/circuitpython-unified-build-ci/workflows/Build%20CI/badge.svg
     :target: https://github.com/adafruit/Adafruit_CircuitPython_VEML7700/actions/
     :alt: Build Status
-    
+
 build-mpy-cross-action
 ======================
 
