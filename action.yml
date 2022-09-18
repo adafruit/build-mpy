@@ -1,0 +1,40 @@
+# SPDX-FileCopyrightText: 2022 Alec Delaney, written for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
+name: 'Build mpy-cross'
+description: 'Build mpy-cross for usage in GitHub Actions'
+inputs:
+  cpy-tag:
+    description: 'The CircuitPython version of mpy-cross to build'
+    required: true
+  repo-name:
+    description: 'The name for the CircuitPython repo'
+    required: true
+    default: 'circuitpython-repo'
+runs:
+  using: "composite"
+  steps:
+    - name: Clone adafruit/circuitpython
+      uses: actions/checkout@v3
+      with:
+        repository: adafruit/circuitpython
+        path: circuitpython-repo
+    - name: Enter CircuitPython repo
+      run: |
+        cd ${{ inputs.repo-name }}
+    - name: Checkout tag and update circuitpython
+      run: |
+        git fetch
+        git checkout ${{ inputs.cpy-tag }}
+        git submodule update
+    - name: Update tools
+      run: |
+        cd tools
+        git submodule update --init
+    - name: Build mpy-cross
+      run: |
+        cd ../mpy-cross
+        make clean
+        make
+        cd ../..

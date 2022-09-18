@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: 2022 Alec Delaney, written for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
+name: Build CI
+
+on: [pull_request, push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    - name: Set up Python 3.x (Latest)
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.x"
+    - name: Checkout current repo
+      uses: actions/checkout@v3
+      with:
+        submodules: true
+    - name: Install pre-commit
+      run: pip install pre-commit
+    - name: Run pre-commit
+      run: pre-commit run --all-files
