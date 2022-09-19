@@ -6,7 +6,7 @@
     :target: https://github.com/adafruit/Adafruit_CircuitPython_VEML7700/actions/
     :alt: Build Status
 
-mpy-cross-action
-================
+build-mpy
+=========
 
-GitHub Actions for using mpy-cross with CircuitPython projects
+GitHub Actions for building packages of .mpy file for CircuitPython projects
