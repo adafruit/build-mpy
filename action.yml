@@ -2,12 +2,55 @@
 #
 # SPDX-License-Identifier: MIT
 
-name: 'Build mpy-cross'
+name: 'Build package of .mpy files'
 description: 'Build mpy-cross for usage in GitHub Actions'
 inputs:
   cpy-tag:
     description: 'The CircuitPython version of mpy-cross to build'
     required: true
+  include-mpy-manifest:
+    description: >
+      Path to a manifest file containing filepaths to convert. If no
+      manifest is provided, all applicable files will be converted. Either
+      this or exclude-mpy-manifest can be defined.
+    required: true
+    default: null
+  exclude-mpy-manifest:
+    description: >
+      Path to a manifest file containing filepaths to exclude from
+      converting. If no manifest is provided, no applicable files will be
+      excluded from conversion. Either this or include-mpy-manifest can be
+      defined.
+    required: true
+    default: null
+  mpy-directory:
+    description: >
+      The directory to look for files to compile with mpy-cross.  If none
+      is provided, the root directory will be used. This also becomess the
+      basis for filepaths in the mpy manifest files.
+    required: true
+    default: null
+  include-zip-manifest:
+    description: >
+      Path to a manifest file containing filepaths to include in the zip
+      file. If no manifest is provided, all files will be included. Either
+      this or exclude-zip-manifest can be defined.
+    required: true
+    default: null
+  exclude-zip-manifest:
+    description: >
+      Path to a manifest file containing filepaths to exclude from the zip
+      file. If no manifest is provided, no files will be excluded. Either
+      this or include-zip-manifest can be defined.
+    required: true
+    default: null
+  zip-directory:
+    description: >
+      The directory of files to bundle.  If none is provided, the root
+      directory will be used.  This also becomess the basis for filepaths
+      in the zip manifest files.
+    required: true
+    default: null
   repo-name:
     description: 'The name for the CircuitPython repo'
     required: true
