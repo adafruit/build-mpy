@@ -74,7 +74,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository: adafruit/circuitpython
-        path: circuitpython-repo
+        path: ${{ inputs.repo-name }}
     - name: Enter CircuitPython repo
       run: |
         cd ${{ inputs.repo-name }}
