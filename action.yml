@@ -58,6 +58,18 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Check manfest files
+      run: |
+        if [[ ${{ inputs.include-mpy-manifest != "" }} && ${{ inputs.exclude-mpy-manifest != "" }}]]
+        then
+          echo "Both include and exclude compilation manifests cannot be provided"
+          exit 1
+        fi
+        if [[ ${{ inputs.include-zip-manifest != "" }} && ${{ inputs.exclude-zip-manifest != "" }}]]
+        then
+          echo "Both include and exclude zip manifests cannot be provided"
+          exit 1
+        fi
     - name: Clone adafruit/circuitpython
       uses: actions/checkout@v3
       with:
