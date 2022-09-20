@@ -29,7 +29,7 @@ inputs:
       is provided, the root directory will be used. This also becomess the
       basis for filepaths in the mpy manifest files.
     required: true
-    default: null
+    default: "."
   include-zip-manifest:
     description: >
       Path to a manifest file containing filepaths to include in the zip
