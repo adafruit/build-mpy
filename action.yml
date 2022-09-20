@@ -77,7 +77,8 @@ runs:
         path: ${{ inputs.repo-name }}
     - name: Enter CircuitPython repo
       run: |
-        cd ${{ inputs.repo-name }}
+        reponame=${{ inputs.repo-name }}
+        cd reponame
     - name: Checkout tag and update circuitpython
       run: |
         git fetch
