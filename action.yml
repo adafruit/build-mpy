@@ -98,7 +98,7 @@ runs:
         pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -name "${{ inputs.repo-name }}/")
         for file in ${pyfiles[@]}
         do
-          if [[ ${{ inputs.mpy-manifest-file }} != "" ]]
+          if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
           then
             if [[ [[ ${{ inputs.mpy-manifest-type }} == "include" && " ${manifestfiles[*]} " =~ " ${file} " ]] || \
               [[ ${{ inputs.mpy-manifest-type }} == "exclude" && ! " ${manifestfiles[*]} " =~ " ${file} "]] ]]
