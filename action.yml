@@ -67,7 +67,7 @@ runs:
       shell: bash
       run: |
         reponame="${{ inputs.repo-name }}"
-        cd reponame
+        cd $reponame
     - name: Checkout tag and update circuitpython
       shell: bash
       run: |
