@@ -72,16 +72,13 @@ runs:
         git fetch
         git checkout ${{ inputs.cpy-tag }}
         git submodule update
-    - name: Update tools
-      shell: bash
-      run: |
         cd tools
         git submodule update --init
     - name: Build mpy-cross
       shell: bash
       run: |
-        ls -a
-        cd mpy-cross
+        reponame="${{ inputs.repo-name }}"
+        cd $reponame/mpy-cross
         make clean
         make
     - name: Read mpy manifest (if supplied)
