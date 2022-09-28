@@ -71,9 +71,6 @@ runs:
         ls -a
         git fetch
         git checkout ${{ inputs.cpy-tag }}
-        git submodule update
-        cd tools
-        git submodule update --init
     - name: Build mpy-cross
       shell: bash
       run: |
