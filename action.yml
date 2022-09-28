@@ -8,12 +8,12 @@ inputs:
   cpy-tag:
     description: 'The CircuitPython version of mpy-cross to build'
     required: true
-  mpy-manifest:
+  mpy-manifest-file:
     description: >
       Path to a manifest file containing filepaths to convert. If no
       manifest is provided, all applicable files will be converted.
     required: true
-    default: null
+    default: ""
   mpy-manifest-type:
     description: >
       The type of manifest to use for compiling if one is provided. The
@@ -28,13 +28,13 @@ inputs:
       basis for filepaths in the mpy manifest files.
     required: true
     default: "."
-  zip-manifest:
+  zip-manifest-file:
     description: >
       Path to a manifest file containing filepaths to include in the zip
       file. If no manifest is provided, all files will be included. Either
       this or exclude-zip-manifest can be defined.
     required: true
-    default: null
+    default: ""
   zip-manifest-type:
     description: >
       The type of manifest to use for zipping if one isPath to a manifest file containing filepaths to exclude from the zip
