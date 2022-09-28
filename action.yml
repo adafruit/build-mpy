@@ -88,7 +88,7 @@ runs:
     - name: Read mpy manifest (if supplied)
       shell: bash
       run: |
-        if [[ ${{ inputs.mpy-manifest-file }} != "" ]]
+        if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
         then
           readarray manifestfiles < ${{ inputs.mpy-manifest-file }}
         fi
