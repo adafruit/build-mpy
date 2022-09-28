@@ -64,31 +64,37 @@ runs:
         repository: adafruit/circuitpython
         path: ${{ inputs.repo-name }}
     - name: Enter CircuitPython repo
+      shell: bash
       run: |
         reponame=${{ inputs.repo-name }}
         cd reponame
     - name: Checkout tag and update circuitpython
+      shell: bash
       run: |
         git fetch
         git checkout ${{ inputs.cpy-tag }}
         git submodule update
     - name: Update tools
+      shell: bash
       run: |
         cd tools
         git submodule update --init
     - name: Build mpy-cross
+      shell: bash
       run: |
         cd ../mpy-cross
         make clean
         make
         cd ../..
     - name: Read mpy manifest (if supplied)
+      shell: bash
       run: |
         if [[ ${{ inputs.mpy-manifest-file }} != "" ]]
         then
           readarray manifestfiles < ${{ inputs.mpy-manifest-file }}
         fi
     - name: Convert files to .mpy
+      shell: bash
       run: |
         pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py")
         for file in ${pyfiles[@]}
