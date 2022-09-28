@@ -58,6 +58,12 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Install build tools
+      shell: bash
+      run: |
+        apt install build-essential
+        add-apt-repository ppa:pybricks/ppa
+        apt install git gettext uncrustify
     - name: Clone adafruit/circuitpython
       uses: actions/checkout@v3
       with:
