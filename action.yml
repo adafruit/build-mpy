@@ -82,3 +82,23 @@ runs:
         make clean
         make
         cd ../..
+    - name: Read mpy manifest (if supplied)
+      run: |
+        if [[ ${{ inputs.mpy-manifest-file }} != "" ]]
+        then
+          readarray manifestfiles < ${{ inputs.mpy-manifest-file }}
+        fi
+    - name: Convert files to .mpy
+      run: |
+        pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py")
+        for file in ${pyfiles[@]}
+        do
+          if ${{ inputs.mpy-manifest-file != "" }}
+          then
+            if [[ [[ ${{ inputs.mpy-manifest-type }} == "include" && " ${manifestfiles[*]} " =~ " ${file} " ]] || \
+              [[ ${{ inputs.mpy-manifest-type }} == "exclude" && ! " ${manifestfiles[*]} " =~ " ${file} "]] ]]
+            then
+              "${reponame}/mpy-cross/mpy-cross" $file
+            fi
+          fi
+        done
