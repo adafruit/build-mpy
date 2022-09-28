@@ -90,7 +90,7 @@ runs:
       run: |
         if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
         then
-          readarray manifestfiles < ${{ inputs.mpy-manifest-file }}
+          readarray manifestfiles < "${{ inputs.mpy-manifest-file }}"
         fi
     - name: Convert files to .mpy
       shell: bash
