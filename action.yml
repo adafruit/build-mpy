@@ -63,15 +63,11 @@ runs:
       with:
         repository: adafruit/circuitpython
         path: ${{ inputs.repo-name }}
-    - name: Enter CircuitPython repo
+    - name: Enter CircuitPython repo, checkout tag, and update
       shell: bash
       run: |
         reponame="${{ inputs.repo-name }}"
         cd $reponame
-        ls -a
-    - name: Checkout tag and update circuitpython
-      shell: bash
-      run: |
         ls -a
         git fetch
         git checkout ${{ inputs.cpy-tag }}
@@ -84,10 +80,9 @@ runs:
     - name: Build mpy-cross
       shell: bash
       run: |
-        cd ../mpy-cross
+        cd mpy-cross
         make clean
         make
-        cd ../..
     - name: Read mpy manifest (if supplied)
       shell: bash
       run: |
