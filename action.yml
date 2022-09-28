@@ -94,7 +94,7 @@ runs:
     - name: Convert files to .mpy
       shell: bash
       run: |
-        pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py")
+        pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -name "${{ inputs.repo-name }}/")
         for file in ${pyfiles[@]}
         do
           if [[ ${{ inputs.mpy-manifest-file }} != "" ]]
