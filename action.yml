@@ -71,6 +71,7 @@ runs:
         ls -a
         git fetch
         git checkout ${{ inputs.cpy-tag }}
+        make fetch-submodules
     - name: Build mpy-cross
       shell: bash
       run: |
