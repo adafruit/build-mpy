@@ -100,8 +100,9 @@ runs:
         do
           if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
           then
-            if [[ "${{ inputs.mpy-manifest-type }}" == "include" -a " ${manifestfiles[*]} " =~ " ${file} " ]] || \
-              [[ "${{ inputs.mpy-manifest-type }}" == "exclude" -a ! " ${manifestfiles[*]} " =~ " ${file} "]]
+            if [[ ( "${{ inputs.mpy-manifest-file }}" == "include" && "${manifestfiles[*]}" =~ "${file}" ) || \
+                ( "${{ inputs.mpy-manifest-file }}" == "exclude" && ! "${manifestfiles[*]}" =~ "${file}" ) ]]
+    then
             then
               "${reponame}/mpy-cross/mpy-cross" $file
             fi
