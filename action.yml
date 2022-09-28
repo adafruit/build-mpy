@@ -71,6 +71,7 @@ runs:
     - name: Checkout tag and update circuitpython
       shell: bash
       run: |
+        ls -a
         git fetch
         git checkout ${{ inputs.cpy-tag }}
         git submodule update
