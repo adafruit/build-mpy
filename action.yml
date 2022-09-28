@@ -80,6 +80,7 @@ runs:
     - name: Build mpy-cross
       shell: bash
       run: |
+        ls -a
         cd mpy-cross
         make clean
         make
