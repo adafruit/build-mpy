@@ -19,7 +19,7 @@ inputs:
     description: >
       The directory to look for files to compile with mpy-cross.  If none
       is provided, the root directory will be used. This also becomess the
-      basis for filepaths in the mpy manifest files.
+      basis for filepaths in the mpy manifest file, if one is provided.
     required: true
     default: "."
   mpy-manifest-file:
@@ -39,7 +39,7 @@ inputs:
     description: >
       The directory of files to bundle.  If none is provided, the root
       directory will be used.  This also becomess the basis for filepaths
-      in the zip manifest files.
+      in the zip manifest file, if one is provided.
     required: true
     default: null
   zip-manifest-file:
