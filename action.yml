@@ -104,16 +104,17 @@ runs:
               ( "${{ inputs.mpy-manifest-type }}" == "exclude" && ! "${manifestfiles[*]}" =~ "${file}" ) ]]
           then
             echo "Compiling $file"
-            export outputmpy="${{ inputs.mpy-directory }}/${file%.*}.mpy"
+            outputmpy="${{ inputs.mpy-directory }}/${file%.*}.mpy"
             mpyresults+=outputmpy
-            ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file -o outputmpy
+            ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file -o $outputmpy
           fi
         done
+        export mpyresults
     - name: Clean up post build
       shell: bash
       run: |
         rm -r ${{ inputs.repo-name }}
-        for file in $outputmpy
+        for file in ${mpyresults[@]}
         do
           rm $file
         done
