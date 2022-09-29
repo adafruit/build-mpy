@@ -107,3 +107,7 @@ runs:
             ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file
           fi
         done
+    - name: Delete CircuitPython repository
+      shell: bash
+      run: |
+        rm -r ${{ inputs.repo-name }}
