@@ -8,6 +8,13 @@ inputs:
   cpy-tag:
     description: 'The CircuitPython version of mpy-cross to build'
     required: true
+  mpy-directory:
+    description: >
+      The directory to look for files to compile with mpy-cross.  If none
+      is provided, the root directory will be used. This also becomess the
+      basis for filepaths in the mpy manifest files.
+    required: true
+    default: "."
   mpy-manifest-file:
     description: >
       Path to a manifest file containing filepaths to convert. If no
@@ -21,13 +28,13 @@ inputs:
       files EXCEPT the ones listed will be compuled with mpy-cross.
     required: true
     default: "include"
-  mpy-directory:
+  zip-directory:
     description: >
-      The directory to look for files to compile with mpy-cross.  If none
-      is provided, the root directory will be used. This also becomess the
-      basis for filepaths in the mpy manifest files.
+      The directory of files to bundle.  If none is provided, the root
+      directory will be used.  This also becomess the basis for filepaths
+      in the zip manifest files.
     required: true
-    default: "."
+    default: null
   zip-manifest-file:
     description: >
       Path to a manifest file containing filepaths to include in the zip
@@ -44,13 +51,6 @@ inputs:
       EXCEPT the ones listed will be zipped.
     required: true
     default: "include"
-  zip-directory:
-    description: >
-      The directory of files to bundle.  If none is provided, the root
-      directory will be used.  This also becomess the basis for filepaths
-      in the zip manifest files.
-    required: true
-    default: null
   repo-name:
     description: 'The name for the CircuitPython repo'
     required: true
