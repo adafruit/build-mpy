@@ -104,6 +104,6 @@ runs:
               ( "${{ inputs.mpy-manifest-type }}" == "exclude" && ! "${manifestfiles[*]}" =~ "${file}" ) ]]
           then
             echo "Compiling $file"
-            ${reponame}/mpy-cross/mpy-cross $file
+            ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file
           fi
         done
