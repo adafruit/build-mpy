@@ -77,29 +77,24 @@ runs:
     - name: Enter CircuitPython repo, checkout tag, and update
       shell: bash
       run: |
-        reponame="${{ inputs.repo-name }}"
-        cd $reponame
+        cd ${{ inputs.repo-name }}
         git fetch
         git checkout ${{ inputs.cpy-tag }}
         make fetch-submodules
     - name: Build mpy-cross
       shell: bash
       run: |
-        reponame="${{ inputs.repo-name }}"
-        cd $reponame/mpy-cross
+        cd ${{ inputs.repo-name }}/mpy-cross
         make clean
         make
-    - name: Read mpy manifest (if supplied)
+    - name: Compile MPY files
       shell: bash
       run: |
+        reponame="${{ inputs.repo-name }}"
         if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
         then
           readarray manifestfiles < "${{ inputs.mpy-manifest-file }}"
         fi
-    - name: Convert files to .mpy
-      shell: bash
-      run: |
-        reponame="${{ inputs.repo-name }}"
         mpyresults=()
         pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.repo-name }}/*" ! -name "*code.py" -printf '%P\n')
         for file in ${pyfiles[@]}
