@@ -19,8 +19,8 @@ inputs:
       The type of manifest to use for compiling if one is provided. The
       default is "include", but if "exclude" is provided, then all Python
       files EXCEPT the ones listed will be compuled with mpy-cross.
-    required: "include"
-    default: true
+    required: true
+    default: "include"
   mpy-directory:
     description: >
       The directory to look for files to compile with mpy-cross.  If none
