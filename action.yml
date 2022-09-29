@@ -96,7 +96,7 @@ runs:
       shell: bash
       run: |
         reponame="${{ inputs.repo-name }}"
-        pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.repo-name }}/*" -printf '%P\n')
+        pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.repo-name }}/*" ! -name "*code.py" -printf '%P\n')
         for file in ${pyfiles[@]}
         do
           if [[ "${{ inputs.mpy-manifest-file }}" == "" ]] || \
