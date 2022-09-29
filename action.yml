@@ -56,10 +56,6 @@ inputs:
       EXCEPT the ones listed will be zipped.
     required: true
     default: "include"
-  repo-name:
-    description: 'The name for the CircuitPython repo'
-    required: true
-    default: 'circuitpython-repo'
 runs:
   using: "composite"
   steps:
