@@ -103,6 +103,7 @@ runs:
              [[ ( "${{ inputs.mpy-manifest-type }}" == "include" && "${manifestfiles[*]}" =~ "${file}" ) || \
               ( "${{ inputs.mpy-manifest-type }}" == "exclude" && ! "${manifestfiles[*]}" =~ "${file}" ) ]]
           then
-            "${reponame}/mpy-cross/mpy-cross" $file
+            echo "Compiling $file"
+            ${reponame}/mpy-cross/mpy-cross $file
           fi
         done
