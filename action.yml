@@ -95,10 +95,11 @@ runs:
     - name: Convert files to .mpy
       shell: bash
       run: |
-        pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -name "${{ inputs.repo-name }}/")
+        pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.repo-name }}/*" -printf '%P\n')
         for file in ${pyfiles[@]}
         do
-          if [[ ( "${{ inputs.mpy-manifest-type }}" == "include" && "${manifestfiles[*]}" =~ "${file}" ) || \
+          if [[ ${{ inputs.mpy-manifest-file }} == "" ]] || \
+             [[ ( "${{ inputs.mpy-manifest-type }}" == "include" && "${manifestfiles[*]}" =~ "${file}" ) || \
               ( "${{ inputs.mpy-manifest-type }}" == "exclude" && ! "${manifestfiles[*]}" =~ "${file}" ) ]]
           then
             "${reponame}/mpy-cross/mpy-cross" $file
