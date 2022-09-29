@@ -109,10 +109,6 @@ runs:
             ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file -o $outputmpy
           fi
         done
-        export mpyresults
-    - name: Clean up post build
-      shell: bash
-      run: |
         echo "Deleting CircuitPython repository folder"
         rm -r ${{ inputs.repo-name }}
         for file in ${mpyresults[@]}
