@@ -74,7 +74,6 @@ runs:
       run: |
         reponame="${{ inputs.repo-name }}"
         cd $reponame
-        ls -a
         git fetch
         git checkout ${{ inputs.cpy-tag }}
         make fetch-submodules
