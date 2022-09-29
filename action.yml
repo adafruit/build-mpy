@@ -8,6 +8,13 @@ inputs:
   cpy-tag:
     description: 'The CircuitPython version of mpy-cross to build'
     required: true
+  repo-name:
+    description: >
+      The name for the CircuitPython repo.  The default is 'circuitpython-repo',
+      and there typically isn't any reason to change this unless it conflicts
+      with an existing folder name in your repository.
+    required: true
+    default: 'circuitpython-repo'
   mpy-directory:
     description: >
       The directory to look for files to compile with mpy-cross.  If none
