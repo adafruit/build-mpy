@@ -95,6 +95,7 @@ runs:
       shell: bash
       run: |
         reponame="${{ inputs.repo-name }}"
+        mpyresults=()
         pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.repo-name }}/*" ! -name "*code.py" -printf '%P\n')
         for file in ${pyfiles[@]}
         do
@@ -103,10 +104,16 @@ runs:
               ( "${{ inputs.mpy-manifest-type }}" == "exclude" && ! "${manifestfiles[*]}" =~ "${file}" ) ]]
           then
             echo "Compiling $file"
-            ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file -o "${{ inputs.mpy-directory }}/${file%.*}.mpy"
+            export outputmpy="${{ inputs.mpy-directory }}/${file%.*}.mpy"
+            mpyresults+=outputmpy
+            ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file -o outputmpy
           fi
         done
-    - name: Delete CircuitPython repository
+    - name: Clean up post build
       shell: bash
       run: |
         rm -r ${{ inputs.repo-name }}
+        for file in $outputmpy
+        do
+          rm $file
+        done
