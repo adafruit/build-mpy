@@ -104,7 +104,7 @@ runs:
               ( "${{ inputs.mpy-manifest-type }}" == "exclude" && ! "${manifestfiles[*]}" =~ "${file}" ) ]]
           then
             echo "Compiling $file"
-            ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file
+            ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file -o "${{ inputs.mpy-directory }}/${file%.*}.mpy"
           fi
         done
     - name: Delete CircuitPython repository
