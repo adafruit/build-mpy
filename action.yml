@@ -51,9 +51,7 @@ inputs:
     default: ""
   zip-manifest-type:
     description: >
-      The type of manifest to use for zipping if one isPath to a manifest file containing filepaths to exclude from the zip
-      file. If no manifest is provided, no files will be excluded. Either
-      this or include-zip-manifest can be defined. provided. The
+      The type of manifest to use for zipping, if one is provided. The
       default is "include", but if "exclude" is provided, then all files
       EXCEPT the ones listed will be zipped.
     required: true
