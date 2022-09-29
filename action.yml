@@ -58,43 +58,15 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install build tools
+    - name: Compile using mpy-cross
       shell: bash
       run: |
-        sudo apt install build-essential
-        sudo add-apt-repository ppa:pybricks/ppa
-        sudo apt install git gettext uncrustify
-    - name: Clone adafruit/circuitpython
-      uses: actions/checkout@v3
-      with:
-        repository: adafruit/circuitpython
-        path: ${{ inputs.repo-name }}
-    - name: Enter CircuitPython repo, checkout tag, and update
-      shell: bash
-      run: |
-        reponame="${{ inputs.repo-name }}"
-        cd $reponame
-        ls -a
-        git fetch
-        git checkout ${{ inputs.cpy-tag }}
-        make fetch-submodules
-    - name: Build mpy-cross
-      shell: bash
-      run: |
-        reponame="${{ inputs.repo-name }}"
-        cd $reponame/mpy-cross
-        make clean
-        make
-    - name: Read mpy manifest (if supplied)
-      shell: bash
-      run: |
+        mpycrossfile="mpy-cross-${{ inputs.cpy-tag }}"
+        wget "https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-amd64-linux-${{ inputs.cpy-tag }} -O $mpycrossfile"
         if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
         then
           readarray manifestfiles < "${{ inputs.mpy-manifest-file }}"
         fi
-    - name: Convert files to .mpy
-      shell: bash
-      run: |
         reponame="${{ inputs.repo-name }}"
         pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.repo-name }}/*" -printf '%P\n')
         for file in ${pyfiles[@]}
@@ -104,6 +76,6 @@ runs:
               ( "${{ inputs.mpy-manifest-type }}" == "exclude" && ! "${manifestfiles[*]}" =~ "${file}" ) ]]
           then
             echo "Compiling $file"
-            ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file
+            $mpycrossfile ${{ inputs.mpy-directory }}/$file
           fi
         done
