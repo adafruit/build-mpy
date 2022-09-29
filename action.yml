@@ -113,8 +113,10 @@ runs:
     - name: Clean up post build
       shell: bash
       run: |
+        echo "Deleting CircuitPython repository folder"
         rm -r ${{ inputs.repo-name }}
         for file in ${mpyresults[@]}
         do
+          echo "Deleting $file"
           rm $file
         done
