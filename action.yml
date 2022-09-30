@@ -41,7 +41,7 @@ inputs:
       directory will be used.  This also becomess the basis for filepaths
       in the zip manifest file, if one is provided.
     required: true
-    default: null
+    default: "."
   zip-manifest-file:
     description: >
       Path to a manifest file containing filepaths to include in the zip
@@ -89,10 +89,10 @@ runs:
         # Store repo name
         reponame="${{ inputs.repo-name }}"
 
-        # Read manifest file contents, if needed
+        # Read MPY manifest file contents, if needed
         if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
         then
-          readarray manifestfiles < "${{ inputs.mpy-manifest-file }}"
+          readarray mpymanifestfiles < "${{ inputs.mpy-manifest-file }}"
         fi
 
         # Compile MPY files
@@ -101,8 +101,8 @@ runs:
         for file in ${pyfiles[@]}
         do
           if [[ "${{ inputs.mpy-manifest-file }}" == "" ]] || \
-             [[ ( "${{ inputs.mpy-manifest-type }}" == "include" && "${manifestfiles[*]}" =~ "${file}" ) || \
-              ( "${{ inputs.mpy-manifest-type }}" == "exclude" && ! "${manifestfiles[*]}" =~ "${file}" ) ]]
+             [[ ( "${{ inputs.mpy-manifest-type }}" == "include" && "${mpymanifestfiles[*]}" =~ "${file}" ) || \
+              ( "${{ inputs.mpy-manifest-type }}" == "exclude" && ! "${mpymanifestfiles[*]}" =~ "${file}" ) ]]
           then
             echo "Compiling $file"
             outputmpy="${{ inputs.mpy-directory }}/${file%.*}.mpy"
@@ -114,6 +114,37 @@ runs:
         # Delete the CircuitPython repo
         echo "Deleting CircuitPython repository folder"
         rm -r ${{ inputs.repo-name }}
+
+        # Read ZIP manifest file contents, if needed
+        if [[ "${{ inputs.zip-manifest-file }}" != "" ]]
+        then
+          readarray zipmanifestfiles < "${{ inputs.zip-manifest-file }}"
+        fi
+
+        # Zip files
+        zipresults=()
+        allfiles=$(find ${{ inputs.zip-directory }} -type f ! "./.git/*" -printf '%P\n')
+        for file in ${allfiles[@]}
+        do
+
+          if [[ "${{ inputs.zip-manifest-file }}" == "" ]] || \
+             [[ ( "${{ inputs.zip-manifest-type }}" == "include" && "${zipmanifestfiles[*]}" =~ "${file}" ) || \
+              ( "${{ inputs.zip-manifest-type }}" == "exclude" && ! "${zipmanifestfiles[*]}" =~ "${file}" ) ]]
+          then
+            potentialmpy="${file%.*}.mpy"
+            if [[ "${{ inputs.zip-directory }}" != "." ]]
+            then
+              potentialmpy="${{ inputs.zip-directory }}/$potentialmpy"
+            fi
+
+            if [[ "${mpyresults[*]}" =~ "${potentialmpy}" ]] && [[ ! -a "$file" ]]
+            then
+              zipresults+=("${{ inputs.zip-directory }}/$potentialmpy")
+            else
+              zipresults+=("${{ inputs.zip-directory }}/$file")
+            fi
+          fi
+        done
 
         # Delete MPY files
         for file in ${mpyresults[@]}
