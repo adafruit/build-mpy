@@ -146,6 +146,8 @@ runs:
           fi
         done
 
+        echo "${zipresults}[@]"
+
         # Delete MPY files
         for file in ${mpyresults[@]}
         do
