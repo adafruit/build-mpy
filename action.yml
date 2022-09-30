@@ -174,9 +174,9 @@ runs:
 
             if [[ "${mpyresults[*]}" =~ "${potentialmpy}" ]] && [[ ! -a "$file" ]]
             then
-              zipresults+=("${{ inputs.zip-directory }}/$potentialmpy")
+              zipresults+=("$$potentialmpy")
             else
-              zipresults+=("${{ inputs.zip-directory }}/$file")
+              zipresults+=("$potentialfile")
             fi
           fi
         done
