@@ -142,7 +142,7 @@ runs:
               potentialfile="${{ inputs.zip-directory }}/$file"
             fi
 
-            if [[ "${prempyfiles[*]}" =~ "${$potentialfile}" ]]
+            if [[ "${prempyfiles[*]}" =~ "${potentialfile}" ]]
             then
               continue
             fi
