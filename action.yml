@@ -97,6 +97,7 @@ runs:
 
         # Compile MPY files
         mpyresults=()
+        prempyfiles=()
         pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.repo-name }}/*" ! -name "*code.py" -printf '%P\n')
         for file in ${pyfiles[@]}
         do
@@ -107,7 +108,9 @@ runs:
             echo "Compiling $file"
             outputmpy="${{ inputs.mpy-directory }}/${file%.*}.mpy"
             mpyresults+=("$outputmpy")
-            ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file -o $outputmpy
+            prempyfile="${{ inputs.mpy-directory }}/$file"
+            prempyfiles+=("$prempyfile")
+            ${reponame}/mpy-cross/mpy-cross $prempyfile -o $outputmpy
           fi
         done
 
@@ -132,9 +135,16 @@ runs:
               ( "${{ inputs.zip-manifest-type }}" == "exclude" && ! "${zipmanifestfiles[*]}" =~ "${file}" ) ]]
           then
             potentialmpy="${file%.*}.mpy"
+            potentialfile="$file"
             if [[ "${{ inputs.zip-directory }}" != "." ]]
             then
               potentialmpy="${{ inputs.zip-directory }}/$potentialmpy"
+              potentialfile="${{ inputs.zip-directory }}/$file"
+            fi
+
+            if [[ "${prempyfiles[*]}" =~ "${$potentialfile}" ]]
+            then
+              continue
             fi
 
             if [[ "${mpyresults[*]}" =~ "${potentialmpy}" ]] && [[ ! -a "$file" ]]
