@@ -8,12 +8,16 @@ inputs:
   cpy-tag:
     description: 'The CircuitPython version of mpy-cross to build'
     required: true
-  repo-name:
+  zip-filename:
+    description: 'The name of the ZIP file to attach'
+    required: true
+    default: "mpy-release.zip"
+  circuitpython-repo-name:
     description: >
       The name for the CircuitPython repo.  The default is 'circuitpython-repo',
       and there typically isn't any reason to change this unless it conflicts
       with an existing folder name in your repository.
-    required: true
+    required: truehttps://github.com/adafruit/Adafruit_CircuitPython_turtle/pull/31
     default: 'circuitpython-repo'
   mpy-directory:
     description: >
@@ -59,6 +63,10 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Install zip
+      shell: bash
+      run: |
+        sudo apt install zip
     - name: Install build tools
       shell: bash
       run: |
@@ -69,25 +77,25 @@ runs:
       uses: actions/checkout@v3
       with:
         repository: adafruit/circuitpython
-        path: ${{ inputs.repo-name }}
+        path: ${{ inputs.circuitpython-repo-name }}
     - name: Enter CircuitPython repo, checkout tag, and update
       shell: bash
       run: |
-        cd ${{ inputs.repo-name }}
+        cd ${{ inputs.circuitpython-repo-name }}
         git fetch
         git checkout ${{ inputs.cpy-tag }}
         make fetch-submodules
     - name: Build mpy-cross
       shell: bash
       run: |
-        cd ${{ inputs.repo-name }}/mpy-cross
+        cd ${{ inputs.circuitpython-repo-name }}/mpy-cross
         make clean
         make
     - name: Compile MPY files
       shell: bash
       run: |
         # Store repo name
-        reponame="${{ inputs.repo-name }}"
+        reponame="${{ inputs.circuitpython-repo-name }}"
 
         # Read MPY manifest file contents, if needed
         if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
@@ -98,7 +106,7 @@ runs:
         # Compile MPY files
         mpyresults=()
         prempyfiles=()
-        pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.repo-name }}/*" ! -name "*code.py" -printf '%P\n')
+        pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.circuitpython-repo-name }}/*" ! -name "*code.py" -printf '%P\n')
         for file in ${pyfiles[@]}
         do
           if [[ "${{ inputs.mpy-manifest-file }}" == "" ]] || \
@@ -116,7 +124,7 @@ runs:
 
         # Delete the CircuitPython repo
         echo "Deleting CircuitPython repository folder"
-        rm -r ${{ inputs.repo-name }}
+        rm -r ${{ inputs.circuitpython-repo-name }}
 
         # Read ZIP manifest file contents, if needed
         if [[ "${{ inputs.zip-manifest-file }}" != "" ]]
@@ -156,7 +164,8 @@ runs:
           fi
         done
 
-        echo "${zipresults[@]}"
+        # Create the ZIP file
+        zip ${{ inputs.zip-filename }} "${zipresults[@]}"
 
         # Delete MPY files
         for file in ${mpyresults[@]}
@@ -164,3 +173,13 @@ runs:
           echo "Deleting $file"
           rm $file
         done
+    - name: Upload ZIP file to release
+      uses: csexton/release-asset-action@master
+      with:
+        file: ${{ inputs.zip-filename }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Delete ZIP file
+      shell: bash
+      run: |
+        cd ${{ inputs.circuitpython-repo-name }}
+        rm ${{ inputs.zip-filename }}
