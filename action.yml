@@ -104,6 +104,13 @@ runs:
         if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
         then
           readarray mpymanifestfiles < "${{ inputs.mpy-manifest-file }}"
+          for file in ${mpymanifestfiles[@]}
+          do
+            if [[ $file = *[[:space:]]* ]] || [[ $file == "#*" ]]
+            then
+              mpymanifestfiles=( $"{mpymanifestfiles[@]/$file}" )
+            fi
+          done
         fi
 
         # Compile MPY files
@@ -133,6 +140,13 @@ runs:
         if [[ "${{ inputs.zip-manifest-file }}" != "" ]]
         then
           readarray zipmanifestfiles < "${{ inputs.zip-manifest-file }}"
+          for file in ${zipmanifestfiles[@]}
+          do
+            if [[ $file = *[[:space:]]* ]] || [[ $file == "#*" ]]
+            then
+              zipmanifestfiles=( $"{zipmanifestfiles[@]/$file}" )
+            fi
+          done
         fi
 
         # Zip files
