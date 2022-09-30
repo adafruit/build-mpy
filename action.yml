@@ -5,6 +5,9 @@
 name: 'Build package of .mpy files'
 description: 'Build mpy-cross for usage in GitHub Actions'
 inputs:
+  github-token:
+    description: 'Your GitHub token, needed to upload the ZIP file'
+    required: true
   cpy-tag:
     description: 'The CircuitPython version of mpy-cross to build'
     required: true
@@ -177,7 +180,7 @@ runs:
       uses: csexton/release-asset-action@master
       with:
         file: ${{ inputs.zip-filename }}
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ inputs.github-token }}
     - name: Delete ZIP file
       shell: bash
       run: |
