@@ -184,5 +184,4 @@ runs:
     - name: Delete ZIP file
       shell: bash
       run: |
-        cd ${{ inputs.circuitpython-repo-name }}
         rm ${{ inputs.zip-filename }}
