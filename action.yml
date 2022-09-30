@@ -86,11 +86,16 @@ runs:
     - name: Compile MPY files
       shell: bash
       run: |
+        # Store repo name
         reponame="${{ inputs.repo-name }}"
+
+        # Read manifest file contents, if needed
         if [[ "${{ inputs.mpy-manifest-file }}" != "" ]]
         then
           readarray manifestfiles < "${{ inputs.mpy-manifest-file }}"
         fi
+
+        # Compile MPY files
         mpyresults=()
         pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.repo-name }}/*" ! -name "*code.py" -printf '%P\n')
         for file in ${pyfiles[@]}
@@ -105,8 +110,12 @@ runs:
             ${reponame}/mpy-cross/mpy-cross ${{ inputs.mpy-directory }}/$file -o $outputmpy
           fi
         done
+
+        # Delete the CircuitPython repo
         echo "Deleting CircuitPython repository folder"
         rm -r ${{ inputs.repo-name }}
+
+        # Delete MPY files
         for file in ${mpyresults[@]}
         do
           echo "Deleting $file"
