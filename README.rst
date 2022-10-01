@@ -9,8 +9,8 @@
 build-mpy
 =========
 
-GitHub Action for building packages of .mpy files for CircuitPython projects and attaching them to releases
-as ZIP files.
+GitHub Action for building packages of ``.mpy`` files for CircuitPython projects and attaching them to releases
+as ZIP files.  Files other than ``.mpy`` and ``.py`` files will be added to the ZIP file as well.
 
 Inputs
 ======
