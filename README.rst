@@ -15,11 +15,11 @@ as ZIP files.  Files other than ``.mpy`` and ``.py`` files will be added to the 
 Inputs
 ======
 
-======================= ===================================================================== ==================== ==========================================================
+======================= ===================================================================== ==================== =====================================================================
      Argument Name                                 Description                                       Default                              Notes
-======================= ===================================================================== ==================== ==========================================================
+======================= ===================================================================== ==================== =====================================================================
 github-token            Your GitHub token                                                     N/A                  N/A
-circuitpy-tag           The version of CircuitPython to compile for                           N/A                  N/A
+circuitpy-tag           The version of CircuitPython to compile for                           N/A                  You can use any valid tag (or branch) from ``adafruit/circuitpython``
 zip-filename            The name of the ZIP file that will be attached                        "mpy-release.zip"    N/A
 circuitpython-repo-name The name of the clone CircuitPython repo                              "circuitpython-repo" Change if it conflicts with another file
 mpy-directory           The directory to search for files to compile                          "." (top folder)     Becomes the basis for filepaths in ``mpy-manifest-file``
@@ -28,7 +28,7 @@ mpy-manifest-type       Whether the files in the manifest file should be include
 zip-directory           The directory to add to the ZIP file                                  "." (top folder)     Becomes the basis for filepaths in ``zip-manifest-file``
 zip-manifest-file       A file with a list of files to add to the ZIP file or exclude from it ""                   If none is given, all files in ``zip-directory`` are used
 zip-manifest-type       Whether the files in the manifest file should be included or excluded "include"            N/A
-======================= ===================================================================== ==================== ==========================================================
+======================= ===================================================================== ==================== =====================================================================
 
 Examples
 ========
@@ -84,5 +84,3 @@ to specify certain files NOT to compile, you could modify the script above to be
             mpy-manifest-file: "mpy_manifest.txt"
             mpy-manifest-type: "exclude"
             zip-directory: "microcontroller"
-
-For more information about arguments
