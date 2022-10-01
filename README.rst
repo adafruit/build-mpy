@@ -15,20 +15,20 @@ as ZIP files.  Files other than ``.mpy`` and ``.py`` files will be added to the 
 Inputs
 ======
 
-======================= ===================================================================== ==================== =========================================================
+======================= ===================================================================== ==================== ==========================================================
      Argument Name                                 Description                                       Default                              Notes
-======================= ===================================================================== ==================== =========================================================
+======================= ===================================================================== ==================== ==========================================================
 github-token            Your GitHub token                                                     N/A                  N/A
 circuitpy-tag           The version of CircuitPython to compile for                           N/A                  N/A
 zip-filename            The name of the ZIP file that will be attached                        "mpy-release.zip"    N/A
 circuitpython-repo-name The name of the clone CircuitPython repo                              "circuitpython-repo" Change if it conflicts with another file
 mpy-directory           The directory to search for files to compile                          "." (top folder)     Becomes the basis for filepaths in ``mpy-manifest-file``
-mpy-manifest-file       A file with a list of files to compile or exclude                     ""                   If not is given, all files in ``mpy-directory`` are used
+mpy-manifest-file       A file with a list of files to compile or exclude                     ""                   If none is given, all files in ``mpy-directory`` are used
 mpy-manifest-type       Whether the files in the manifest file should be included or excluded "include"            N/A
 zip-directory           The directory to add to the ZIP file                                  "." (top folder)     Becomes the basis for filepaths in ``zip-manifest-file``
-zip-manifest-file       A file with a list of files to add to the ZIP file or exclude from it ""                   If not is given, all files in ``zip-directory`` are used
+zip-manifest-file       A file with a list of files to add to the ZIP file or exclude from it ""                   If none is given, all files in ``zip-directory`` are used
 zip-manifest-type       Whether the files in the manifest file should be included or excluded "include"            N/A
-======================= ===================================================================== ==================== =========================================================
+======================= ===================================================================== ==================== ==========================================================
 
 Examples
 ========
