@@ -51,7 +51,7 @@ file could be very simple!  This release CI creates .mpy files for CircuitPython
           with:
             submodules: true
         - name: Run MPY Action
-          uses: tekktrik/build-mpy@main
+          uses: tekktrik/build-mpy@v1
           with:
             github-token: ${{ secrets.GITHUB_TOKEN }}
             cpy-tag: "7.2.0"
@@ -76,7 +76,7 @@ to specify certain files NOT to compile, you could modify the script above to be
           with:
             submodules: true
         - name: Run MPY Action
-          uses: tekktrik/build-mpy@main
+          uses: tekktrik/build-mpy@v1
           with:
             github-token: ${{ secrets.GITHUB_TOKEN }}
             cpy-tag: "7.2.0"
