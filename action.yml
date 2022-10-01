@@ -116,7 +116,7 @@ runs:
         # Compile MPY files
         mpyresults=()
         prempyfiles=()
-        pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.circuitpython-repo-name }}/*" ! -name "*code.py" -printf '%P\n')
+        pyfiles=$(find ${{ inputs.mpy-directory }} -name "*.py" ! -path "./${{ inputs.circuitpython-repo-name }}/*" ! -name "code.py" -printf '%P\n')
         for file in ${pyfiles[@]}
         do
           if [[ "${{ inputs.mpy-manifest-file }}" == "" ]] || \
