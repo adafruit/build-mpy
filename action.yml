@@ -20,7 +20,7 @@ inputs:
       The name for the CircuitPython repo.  The default is 'circuitpython-repo',
       and there typically isn't any reason to change this unless it conflicts
       with an existing folder name in your repository.
-    required: truehttps://github.com/adafruit/Adafruit_CircuitPython_turtle/pull/31
+    required: true
     default: 'circuitpython-repo'
   mpy-directory:
     description: >
