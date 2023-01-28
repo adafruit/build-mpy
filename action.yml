@@ -191,10 +191,11 @@ runs:
           rm $file
         done
     - name: Upload ZIP file to release
-      uses: csexton/release-asset-action@master
+      uses: shogo82148/actions-upload-release-asset@v1
       with:
-        file: ${{ inputs.zip-filename }}
-        github-token: ${{ inputs.github-token }}
+        asset_path: ${{ inputs.zip-filename }}
+        github_token: ${{ inputs.github-token }}
+        upload_url: ${{ github.event.release.upload_url }}
     - name: Delete ZIP file
       shell: bash
       run: |
