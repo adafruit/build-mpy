@@ -35,7 +35,7 @@ Examples
 ========
 
 If you have just a repository with files intended for a CircuitPython board, your release
-file could be very simple!  This release CI creates .mpy files for CircuitPython 7.2.0:
+file could be very simple!  This release CI creates .mpy files for CircuitPython 8.2.0:
 
 .. code-block:: yaml
 
@@ -55,7 +55,7 @@ file could be very simple!  This release CI creates .mpy files for CircuitPython
           uses: adafruit/build-mpy@v1
           with:
             github-token: ${{ secrets.GITHUB_TOKEN }}
-            circuitpy-tag: "7.2.0"
+            circuitpy-tag: "8.2.0"
 
 You also have granular control of which directories to compile and zip and the ability to specify which
 files should or should not be compiled and/or zipped.  For example, if you wanted to compile and zip
@@ -80,7 +80,7 @@ to specify certain files NOT to compile, you could modify the script above to be
           uses: adafruit/build-mpy@v1
           with:
             github-token: ${{ secrets.GITHUB_TOKEN }}
-            circuitpy-tag: "7.2.0"
+            circuitpy-tag: "8.2.0"
             mpy-directory: "microcontroller"
             mpy-manifest-file: "mpy_manifest.txt"
             mpy-manifest-type: "exclude"
