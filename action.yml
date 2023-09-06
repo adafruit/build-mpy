@@ -84,10 +84,19 @@ runs:
     - name: Enter CircuitPython repo, checkout tag, and update
       shell: bash
       run: |
+        function version() {
+          echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }';
+        }
+
         cd ${{ inputs.circuitpython-repo-name }}
         git fetch
         git checkout ${{ inputs.circuitpy-tag }}
-        make fetch-submodules
+
+        if [ $(version "${{ inputs.circuitpy-tag }}") -ge $(version "8.2.0") ]; then
+          make fetch-all-submodules
+        else
+          make fetch-submodules
+        fi
     - name: Build mpy-cross
       shell: bash
       run: |
